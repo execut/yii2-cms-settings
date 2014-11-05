@@ -1,0 +1,36 @@
+{
+    "name": "infoweb-internet-solutions/yii2-cms-settings",
+    "description": "Yii2 settings",
+    "keywords": ["yii2", "yii2-cms-settings", "infoweb"],
+    "type": "yii2-extension",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/infoweb-internet-solutions/yii2-cms-settings/issues?state=open",
+        "source": "https://github.com/infoweb-internet-solutions/yii2-cms-settings"
+    },
+    "authors": [
+        {
+            "name": "Fabio Maggio",
+            "email": "fabio@infoweb.be",
+            "homepage": "https://github.com/fabiomaggio"
+        },
+        {
+            "name": "Ruben Heymans",
+            "email": "ruben@infoweb.be",
+            "homepage": "http://www.infoweb.be/"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "yiisoft/yii2": "*",
+        "infoweb-internet-solutions/yii2-cms": "*",
+        "kartik-v/yii2-widgets": "*",
+        "kartik-v/yii2-grid": "*",
+        "2amigos/yii2-translateable-behavior" : "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "infoweb\\settings\\": ""
+        }
+    }
+}
