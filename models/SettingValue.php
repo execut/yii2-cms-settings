@@ -39,7 +39,7 @@ class SettingValue extends \yii\db\ActiveRecord
     {
         return [
             // Required
-            [['language', 'value'], 'required'],
+            [['language'], 'required'],
             // Only required for existing records
             [['setting_id'], 'required', 'when' => function($model) {
                 return !$model->isNewRecord;

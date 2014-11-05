@@ -4,6 +4,15 @@ use yii\helpers\ArrayHelper;
 use kartik\widgets\SwitchInput;
 ?>
 <div class="tab-content default-tab">
+    
+    <?= $form->field($model, 'key')->textInput([
+        'maxlength' => 255
+    ]); ?>
+    
+    <?= $form->field($model, 'label')->textInput([
+        'maxlength' => 255
+    ]); ?>
+    
     <?= $form->field($model, 'type')->dropDownList([
         'system'        => Yii::t('app', 'System'),
         'user-defined'  => Yii::t('app', 'User defined')
@@ -17,6 +26,10 @@ use kartik\widgets\SwitchInput;
         'options' => [
             'system' => ['disabled' => (Yii::$app->user->can('Superadmin')) ? false : true]
         ]
+    ]); ?>
+    
+    <?= $form->field($model, 'template')->dropDownList([
+        'text' => 'Text'
     ]); ?>
     
     <?php echo $form->field($model, 'translateable')->widget(SwitchInput::classname(), [

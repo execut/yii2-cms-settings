@@ -12,12 +12,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // Title ?>
     <h1>
         <?= Html::encode($this->title) ?>
+        
+        <?php if (Yii::$app->user->can('Superadmin')) : ?>
         <?php // Buttons ?>
         <div class="pull-right">
             <?= Html::a(Yii::t('app', 'Create {modelClass}', [
                 'modelClass' => Yii::t('infoweb/settings', 'Setting'),
             ]), ['create'], ['class' => 'btn btn-success']) ?>    
         </div>
+        <?php endif; ?>
     </h1>
     
     <?php // Flash messages ?>
@@ -29,14 +32,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider'=> $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            [
+                'class' => 'kartik\grid\DataColumn',
+                'label' => Yii::t('app', 'Category'),
+                'attribute' => 'category.name',
+                'value' => 'category.name',
+                'enableSorting' => true
+            ],
             'key',
-            'label',
-            'category.name'
+            'label',            
             [
                 'class' => 'kartik\grid\ActionColumn',
-                'template' => '{update}',
+                'template' => '{update} {delete}',
                 'updateOptions'=>['title' => Yii::t('app', 'Update'), 'data-toggle' => 'tooltip'],
-                'width' => '50px',
+                'deleteOptions'=>['title' => Yii::t('app', 'Delete'), 'data-toggle' => 'tooltip'],
+                'width' => '80px',
             ],
         ],
         'responsive' => true,

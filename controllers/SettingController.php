@@ -12,6 +12,7 @@ use yii\base\Model;
 use infoweb\settings\models\Setting;
 use infoweb\settings\models\SettingValue;
 use infoweb\settings\models\SettingCategory;
+use infoweb\settings\models\SettingSearch;
 
 /**
  * SettingController implements the CRUD actions for Setting model.
@@ -53,7 +54,11 @@ class SettingController extends Controller
         $languages = Yii::$app->params['languages'];
 
         // Load the model with default values
-        $model = new Setting(['type' => Setting::TYPE_USER_DEFINED]);
+        $model = new Setting([
+            'type' => Setting::TYPE_SYSTEM,
+            'translateable' => 1,
+            'template' => 'text'
+        ]);
         
         // Get all the categories
         $categories = SettingCategory::find()->all();
@@ -136,7 +141,7 @@ class SettingController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'templates' => $templates
+            'categories' => $categories
         ]);
     }
 

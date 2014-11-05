@@ -47,7 +47,7 @@ class SettingSearch extends Setting
     {
         $query = Setting::find();
         
-        $query->andFilterWhere(['language' => Yii::$app->language]);
+        //$query->andFilterWhere(['language' => Yii::$app->language]);
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -67,8 +67,8 @@ class SettingSearch extends Setting
         
         // enable sorting for the related column
         $dataProvider->sort->attributes['category.name'] = [
-            'asc' => ['category.name' => SORT_ASC],
-            'desc' => ['category.name' => SORT_DESC],
+            'asc' => ['settings_categories.name' => SORT_ASC],
+            'desc' => ['settings_categories.name' => SORT_DESC],
         ];
         
         $dataProvider->sort->defaultOrder = ['category.name' => SORT_ASC, 'label' => SORT_ASC];
@@ -83,7 +83,7 @@ class SettingSearch extends Setting
 
         $query
             ->andFilterWhere(['like', 'label', $this->label])
-            ->andFilterWhere(['LIKE', 'category.name', $this->getAttribute('category.name')]);
+            ->andFilterWhere(['LIKE', 'settings_categories.name', $this->getAttribute('category.name')]);
 
         return $dataProvider;
     }

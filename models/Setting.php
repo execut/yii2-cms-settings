@@ -79,7 +79,7 @@ class Setting extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getValues()
+    public function getTranslations()
     {
         return $this->hasMany(SettingValue::className(), ['setting_id' => 'id']);
     }
@@ -89,6 +89,6 @@ class Setting extends \yii\db\ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne(SettingCategory::className(), ['id' => 'category_id'])->where(['active' => 1]);
+        return $this->hasOne(SettingCategory::className(), ['id' => 'category_id']);
     }
 }
