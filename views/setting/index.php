@@ -31,24 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php echo GridView::widget([
         'dataProvider'=> $dataProvider,
         'filterModel' => $searchModel,
-        'columns' => [
-            [
-                'class' => 'kartik\grid\DataColumn',
-                'label' => Yii::t('app', 'Category'),
-                'attribute' => 'category.name',
-                'value' => 'category.name',
-                'enableSorting' => true
-            ],
-            'key',
-            'label',            
-            [
-                'class' => 'kartik\grid\ActionColumn',
-                'template' => '{update} {delete}',
-                'updateOptions'=>['title' => Yii::t('app', 'Update'), 'data-toggle' => 'tooltip'],
-                'deleteOptions'=>['title' => Yii::t('app', 'Delete'), 'data-toggle' => 'tooltip'],
-                'width' => '80px',
-            ],
-        ],
+        'columns' => $gridViewColumns,
         'responsive' => true,
         'floatHeader' => true,
         'floatHeaderOptions' => ['scrollingTop' => 88],

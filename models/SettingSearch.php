@@ -59,6 +59,11 @@ class SettingSearch extends Setting
         // Join the entity model as a relation
         $query->joinWith(['category']);
         
+        // A normal user is only allowed to view the 'user-defined' settings
+        if (!Yii::$app->user->can('Superadmin')) {
+            $query->andFilterWhere(['type' => Setting::TYPE_USER_DEFINED]);
+        }
+        
         // enable sorting for the label attribute
         $dataProvider->sort->attributes['label'] = [
             'asc' => ['label' => SORT_ASC],

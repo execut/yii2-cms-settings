@@ -5,6 +5,9 @@ use kartik\widgets\SwitchInput;
 ?>
 <div class="tab-content default-tab">
     
+    <?php // Superadmin ?>
+    <?php if (Yii::$app->user->can('Superadmin')) : ?>
+        
     <?= $form->field($model, 'key')->textInput([
         'maxlength' => 255
     ]); ?>
@@ -12,6 +15,13 @@ use kartik\widgets\SwitchInput;
     <?= $form->field($model, 'label')->textInput([
         'maxlength' => 255
     ]); ?>
+    
+    <?php if ($model->translateable == false) : ?>
+    <?= $form->field($model->getTranslation(Yii::$app->language), "[{$model->language}]value")->textArea([
+        'rows' => 5,
+        'name' => "SettingValue[{$model->language}][value]"
+    ]); ?>    
+    <?php endif; ?>    
     
     <?= $form->field($model, 'type')->dropDownList([
         'system'        => Yii::t('app', 'System'),
@@ -41,4 +51,21 @@ use kartik\widgets\SwitchInput;
             'offText' => Yii::t('app', 'No'),
         ]
     ]); ?>
+    
+    <?php // Normal user ?>
+    <?php else : ?>
+    
+    <?= $form->field($model, 'label')->textInput([
+        'maxlength' => 255,
+        'readonly' => true
+    ]); ?>
+    
+    <?php if ($model->translateable == false) : ?>
+    <?= $form->field($model->getTranslation(Yii::$app->language), "[{$model->language}]value")->textArea([
+        'rows' => 5,
+        'name' => "SettingValue[{$model->language}][value]"
+    ]); ?>    
+    <?php endif; ?>
+    
+    <?php endif; ?>
 </div>

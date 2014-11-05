@@ -41,6 +41,7 @@ class SettingController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'gridViewColumns' => $this->getGridViewColumns($searchModel, $dataProvider)
         ]);
     }
 
@@ -286,5 +287,51 @@ class SettingController extends Controller
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested item does not exist'));
         }
+    }
+    
+    /**
+     * Returns the columns that are used in the gridview
+     * 
+     * @return  array
+     */
+    protected function getGridViewColumns($searchModel, $dataProvider)
+    {
+        // Build the gridview columns
+        $gridViewColumns = [];
+        
+        // Add category column
+        $gridViewColumns[] = [
+            'class' => 'kartik\grid\DataColumn',
+            'label' => Yii::t('app', 'Category'),
+            'attribute' => 'category.name',
+            'value' => 'category.name',
+            'enableSorting' => true
+        ];            
+        
+        // Add key column
+        if (Yii::$app->user->can('Superadmin')) {
+            $gridViewColumns[] = 'key';
+        }
+        
+        // Add label column
+        $gridViewColumns[] = 'label';
+        
+        // Add action column
+        $actionColumn = [
+            'class' => 'kartik\grid\ActionColumn',
+            'width' => '80px'
+        ];
+        
+        if (Yii::$app->user->can('Superadmin')) {
+            $actionColumn['template'] = '{update} {delete}';
+            $actionColumn['deleteOptions'] = ['title' => Yii::t('app', 'Delete'), 'data-toggle' => 'tooltip'];    
+        } else {
+            $actionColumn['template'] = '{update}';               
+        }
+        
+        $actionColumn['updateOptions'] = ['title' => Yii::t('app', 'Update'), 'data-toggle' => 'tooltip'];        
+        $gridViewColumns[] = $actionColumn;        
+        
+        return $gridViewColumns;    
     }
 }
