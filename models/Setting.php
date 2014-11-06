@@ -14,6 +14,7 @@ class Setting extends \yii\db\ActiveRecord
 {
     const TYPE_SYSTEM = 'system';
     const TYPE_USER_DEFINED = 'user-defined';
+    const TEMPLATE_TEXT = 'text';
     
     /**
      * @inheritdoc
