@@ -16,22 +16,22 @@ class m141106_074604_create_default_settings extends Migration
         $seoSettings = [
             'seo/meta/title'                        => [
                 'label'         => 'Metatag - Title',
-                'value'         => '',
+                'value'         => 'Title',
                 'translateable' => 1
             ],
             'seo/meta/description'                  => [
                 'label'         => 'Metatag - Description',
-                'value'         => '',
+                'value'         => 'Description',
                 'translateable' => 1
             ],
             'seo/meta/keywords'                     => [
                 'label'         => 'Metatag - Keywords',
-                'value'         => '',
+                'value'         => 'Keywords',
                 'translateable' => 1
             ],
             'seo/analytics/email-google-account'    => [
                 'label'         => 'E-mailadres Google account',
-                'value'         => '',
+                'value'         => 'google@infoweb.be',
                 'translateable' => 0
             ]               
         ];
