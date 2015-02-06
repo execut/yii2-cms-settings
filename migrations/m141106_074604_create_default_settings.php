@@ -7,10 +7,25 @@ use infoweb\settings\models\SettingValue;
 
 class m141106_074604_create_default_settings extends Migration
 {
-    public function up()
+    public function safeUp()
     {
         // Load application languages
         $languages = Yii::$app->params['languages'];
+        
+        // Create default settings categories
+        $settingsCategories = [
+            'Systeem',
+            'SEO',
+            'Social',
+            'Formulieren'
+        ];
+        
+        foreach ($settingsCategories as $k => $settingCategory) {
+            $this->insert('{{%settings_categories}}', [
+                'id'        => $k + 1,
+                'name'      => $settingCategory
+            ]);
+        }
         
         // Create SEO settings
         $seoSettings = [
@@ -103,7 +118,7 @@ class m141106_074604_create_default_settings extends Migration
         }
     }
 
-    public function down()
+    public function safeDown()
     {
         echo "m141106_074604_create_default_settings cannot be reverted.\n";
 
