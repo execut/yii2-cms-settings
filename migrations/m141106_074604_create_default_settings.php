@@ -31,7 +31,7 @@ class m141106_074604_create_default_settings extends Migration
             ],
             'seo/analytics/email-google-account'    => [
                 'label'         => 'E-mailadres Google account',
-                'value'         => 'google@infoweb.be',
+                'value'         => 'google@domain.com',
                 'translateable' => 0
             ]               
         ];
