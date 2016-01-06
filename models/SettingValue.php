@@ -53,7 +53,7 @@ class SettingValue extends \yii\db\ActiveRecord
             // Types
             [['setting_id', 'created_at', 'updated_at'], 'integer'],
             [['value'], 'string'],
-            [['language'], 'string', 'max' => 2]
+            [['language'], 'string', 'max' => 10]
         ];
     }
 

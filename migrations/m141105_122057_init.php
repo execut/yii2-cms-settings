@@ -32,7 +32,7 @@ class m141105_122057_init extends Migration
         // Create 'settings_values' table
         $this->createTable('{{%settings_values}}', [
             'setting_id'    => Schema::TYPE_INTEGER . ' NOT NULL',
-            'language'      => Schema::TYPE_STRING . '(2) NOT NULL',
+            'language'      => Schema::TYPE_STRING . '(10) NOT NULL',
             'value'         => Schema::TYPE_STRING . '(255) NOT NULL',
             'created_at'    => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
             'updated_at'    => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
