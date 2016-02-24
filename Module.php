@@ -8,6 +8,12 @@ use yii\db\ActiveRecord;
 
 class Module extends \yii\base\Module
 {
+    /**
+     * Allow content duplication with the "duplicateable" plugin
+     * @var boolean
+     */
+    public $allowContentDuplication = true;
+
     public function init()
     {
         parent::init();

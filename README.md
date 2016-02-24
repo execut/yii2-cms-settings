@@ -49,3 +49,12 @@ yii i18n/import @infoweb/settings/messages
 To use the module, execute yii migration
 ```
 yii migrate/up --migrationPath=@vendor/infoweb-internet-solutions/yii2-cms-settings/migrations
+
+
+Configuration
+-------------
+All available configuration options are listed below with their default values.
+___
+##### allowContentDuplication (type: `boolean`, default: `true`)
+If this option is set to `true`, the `duplicateable` jquery plugin is activated on all translateable attributes.
+___

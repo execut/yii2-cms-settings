@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Tabs;
+
 ?>
 
 <div class="setting-form">
@@ -10,44 +11,44 @@ use yii\bootstrap\Tabs;
     <?php
     // Init the form
     $form = ActiveForm::begin([
-        'id'                        => 'setting-form',
-        'options'                   => ['class' => 'tabbed-form'],
-        'enableAjaxValidation'      => true,
-        'enableClientValidation'    => false,       
+        'id'                     => 'setting-form',
+        'options'                => ['class' => 'tabbed-form'],
+        'enableAjaxValidation'   => true,
+        'enableClientValidation' => false,
     ]);
 
     // Initialize the tabs
     $tabs = [];
-    
-    if ($model->translateable == true) {
-        // Add the language tabs
-        foreach (Yii::$app->params['languages'] as $languageId => $languageName) {
-            $tabs[] = [
-                'label' => $languageName,
-                'content' => $this->render('_language_tab', [
-                    'model' => $model->getTranslation($languageId),
-                    'form'  => $form,
-                ]),
-                'active' => ($languageId == Yii::$app->language) ? true : false
-            ];
-        }
-    }
-    
+
     // Add the default tab
+    if ($model->translateable == true) {
+        $tabs[] = [
+            'label'   => Yii::t('app', 'General'),
+            'content' => $this->render('_default_tab', [
+                'model' => $model,
+                'form'  => $form,
+            ]),
+            'active'  => true,
+        ];
+    }
+
+    // Add the main tabs
     $tabs[] = [
-        'label' => Yii::t('app', 'General'),
-        'content' => $this->render('_default_tab', ['model' => $model, 'categories' => $categories, 'form' => $form]),
-    ]; 
-    
+        'label'   => Yii::t('app', 'Data'),
+        'content' => $this->render('_data_tab', [
+            'model'      => $model,
+            'module'     => $module,
+            'form'       => $form,
+            'categories' => $categories,
+        ]),
+    ];
+
     // Display the tabs
-    echo Tabs::widget(['items' => $tabs]);   
+    echo Tabs::widget(['items' => $tabs]);
     ?>
-    
-    <div class="form-group buttons">   
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create & close') : Yii::t('app', 'Update & close'), ['class' => 'btn btn-default', 'name' => 'close']) ?>
-        <?= Html::submitButton(Yii::t('app', $model->isNewRecord ? 'Create & new' : 'Update & new'), ['class' => 'btn btn-default', 'name' => 'new']) ?>
-        <?= Html::a(Yii::t('app', 'Close'), ['index'], ['class' => 'btn btn-danger']) ?>   
+
+    <div class="form-group buttons">
+        <?= $this->render('@infoweb/cms/views/ui/formButtons', ['model' => $model]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
