@@ -47,14 +47,12 @@ class m141106_074604_create_default_settings extends Migration
                 'translateable' => $v['translateable']
             ]);
             
-            $setting->save(false);
-            
             // Set values
             foreach ($languages as $languageId => $languageName) {
-                $setting->language = $languageId;
-                $setting->value = $v['value'];
-                $setting->saveTranslation();    
-            }    
+                $setting->translate($languageId)->value = $v['value'];
+            }
+
+            $setting->save(false);
         }
 
         // Create Social settings
@@ -91,15 +89,13 @@ class m141106_074604_create_default_settings extends Migration
                 'template'      => Setting::TEMPLATE_TEXT,
                 'translateable' => $v['translateable']
             ]);
-            
-            $setting->save(false);
-            
+
             // Set values
             foreach ($languages as $languageId => $languageName) {
-                $setting->language = $languageId;
-                $setting->value = $v['value'];
-                $setting->saveTranslation();    
-            }    
+                $setting->translate($languageId)->value = $v['value'];
+            }
+
+            $setting->save(false);
         }
     }
 
