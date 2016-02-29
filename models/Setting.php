@@ -7,8 +7,6 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use creocoder\translateable\TranslateableBehavior;
-use infoweb\settings\models\SettingValue;
-use infoweb\settings\models\SettingCategory;
 
 class Setting extends \yii\db\ActiveRecord
 {
