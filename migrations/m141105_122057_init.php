@@ -5,7 +5,7 @@ use yii\db\Migration;
 
 class m141105_122057_init extends Migration
 {
-    public function up()
+    public function safeUp()
     {
         $tableOptions = null;
         
@@ -13,39 +13,44 @@ class m141105_122057_init extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
+        if ($this->db->driverName === 'pgsql') {
+            $this->execute('CREATE TYPE settings_type AS ENUM (\'system\',\'user-defined\')');
+            $this->execute('CREATE TYPE text_type AS ENUM (\'text\')');
+        }
+
         // Create 'settings' table
         $this->createTable('{{%settings}}', [
-            'id'            => Schema::TYPE_PK,
-            'key'           => Schema::TYPE_STRING . '(255) NOT NULL',
-            'category_id'   => Schema::TYPE_INTEGER . ' NOT NULL',
-            'label'         => Schema::TYPE_STRING . '(255) NOT NULL',
-            'type'          => "ENUM('system','user-defined') NOT NULL DEFAULT 'user-defined'",
-            'template'      => "ENUM('text') NOT NULL DEFAULT 'text'",
-            'translateable' => 'TINYINT(3) UNSIGNED NOT NULL DEFAULT \'1\'',
-            'created_at'    => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
-            'updated_at'    => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
+            'id'            => $this->primaryKey(),
+            'key'           => $this->string()->notNull(),
+            'category_id'   => $this->integer()->notNull(),
+            'label'         => $this->string()->notNull(),
+            'type'          => "settings_type NOT NULL DEFAULT 'user-defined'",
+            'template'      => "text_type NOT NULL DEFAULT 'text'",
+            'translateable' => $this->integer(3)->unsigned()->notNull()->defaultValue('1'),
+            'created_at'    => $this->integer()->unsigned()->notNull(),
+            'updated_at'    => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
         
         $this->createIndex('key', '{{%settings}}', 'key', true);
-        $this->createIndex('category_id', '{{%settings}}', 'category_id');
+        $this->createIndex('settings_category_id_i', '{{%settings}}', 'category_id');
         
         // Create 'settings_values' table
         $this->createTable('{{%settings_values}}', [
-            'setting_id'    => Schema::TYPE_INTEGER . ' NOT NULL',
-            'language'      => Schema::TYPE_STRING . '(10) NOT NULL',
-            'value'         => Schema::TYPE_STRING . '(255) NOT NULL',
-            'created_at'    => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
-            'updated_at'    => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
+            'setting_id'    => $this->integer()->notNull(),
+            'language'      => $this->string(10)->notNull(),
+            'value'         => $this->string()->notNull(),
+            'created_at'    => $this->integer()->unsigned()->notNull(),
+            'updated_at'    => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
         
         $this->addPrimaryKey('setting_id_language', '{{%settings_values}}', ['setting_id', 'language']);
-        $this->createIndex('language', '{{%settings_values}}', 'language');
+        $this->createIndex('settings_values_language_i', '{{%settings_values}}', 'language');
         $this->addForeignKey('FK_SETTINGS_VALUES_SETTING_ID', '{{%settings_values}}', 'setting_id', '{{%settings}}', 'id', 'CASCADE', 'RESTRICT');
         
         // Create 'settings_categories' table
         $this->createTable('{{%settings_categories}}', [
-            'id'                    => Schema::TYPE_PK,
-            'name'                  => Schema::TYPE_STRING . "(255) NOT NULL"
+            'id'                    => $this->primaryKey(),
+            'name'                  => $this->string()->notNull()
         ], $tableOptions);
         
         // Insert the default categories
@@ -55,7 +60,7 @@ class m141105_122057_init extends Migration
         $this->insert('{{%settings_categories}}', ['name' => 'Formulieren']);
     }
 
-    public function down()
+    public function safeDown()
     {
         $this->dropTable('settings_categories');
         $this->dropTable('settings_tables');
