@@ -90,4 +90,15 @@ class Setting extends \yii\db\ActiveRecord
     {
         return $this->hasOne(SettingCategory::className(), ['id' => 'category_id']);
     }
+
+    public static function renderByKey($key) {
+        $setting = self::find()->andWhere([
+            'key' => $key,
+        ])->one();
+        if (!$setting || empty($setting->translations)) {
+            return;
+        }
+
+        return $setting->translations[0]->value;
+    }
 }
